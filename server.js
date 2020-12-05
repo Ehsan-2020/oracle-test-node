@@ -9,8 +9,8 @@ var app = express();
 var PORT = 3000;
 
 app.get('/', function(req, res) {
-    example.run();
-    res.status(200).send('Hello world');
+    example.run(req, res);    
+    
 });
 
 app.listen(PORT, function() {
