@@ -15,12 +15,14 @@ const dbConfig = require('./dbconfig.js');
 
 async function run() {
     let connection;
+    
 
     try {
 
         let sql, binds, options, result;
 
         connection = await oracledb.getConnection(dbConfig);
+        console.log(connection);
 
         // //
         // // Create a table
@@ -33,13 +35,13 @@ async function run() {
         // ];
 
         // for (const s of stmts) {
-        try {
-            await connection.execute(s);
-        } catch (e) {
-            console.log(e)
-            if (e.errorNum != 942)
-                console.error(e);
-        }
+//         try {
+//             await connection.execute(s);
+//         } catch (e) {
+//             console.log(e)
+//             if (e.errorNum != 942)
+//                 console.error(e);
+//         }
         // }
 
         // //
