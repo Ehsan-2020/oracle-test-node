@@ -20,7 +20,7 @@ async function run(req, res) {
         console.log('Obtained connection ! ');
         let fromDate = new Date();
         fromDate.setDate(fromDate.getDate() - 100);
-        const result = connection.execute(`BEGIN
+        const result = await connection.execute(`BEGIN
                PMCLDB.fetchcustomeraccountstatement(:inloginid, :infromdate, :intodate, :outcursor, :outresponsecode);
              END;`,
             {
