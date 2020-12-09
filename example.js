@@ -25,8 +25,8 @@ async function run(req, res) {
              END;`,
             {
                 inloginid: '03079770309', // Bind type is determined from the data.  Default direction is BIND_IN
-                infromdate: fromDate,
-                intodate: new Date(),
+                infromdate: fromDate.toDateString(),
+                intodate: new Date().toDateString(),
                 outcursor: { dir: oracledb.BIND_OUT, type: oracledb.CURSOR },
                 outresponsecode: { dir: oracledb.BIND_OUT, type: oracledb.STRING, maxSize: 80 }
             });
