@@ -17,10 +17,42 @@ async function run(req, res) {
 		console.dir(dbConfig);
 		connection = await oracledb.getConnection(dbConfig);
 		console.log('Obtained connection ! ');
-		const stmt = await connection.execute(`select count (*) from sys.all_objects`);
-		   console.log("resultArrayFormat", stmt)
-		console.log(connection);
+		const result = connection.execute(
+            `
+            BEGIN
+               PMCLDB.fetchcustomeraccountstatement(:inloginid, :infromdate, :intodate, :outcursor, :outresponsecode);
+             END;`,
+            {
+                inloginid: '03079770309', // Bind type is determined from the data.  Default direction is BIND_IN
+                infromdate: fromDate,
+                intodate: new Date(),
+                outcursor: { dir: oracledb.BIND_OUT, type: oracledb.CURSOR },
+                outresponsecode: { dir: oracledb.BIND_OUT, type: oracledb.STRING, maxSize: 40 }
+            });
+        // const stmt = await connection.execute(`select * from CUSTOMERACCOUNTSTATEMENT`);
+
+        console.log("resultArrayFormat", result)
+
+        console.log("Cursor metadata:");
+        console.log(result.outBinds.outcursor.metaData);
+
+
+
+        const resultSet = result.outBinds.outcursor;
+        let rows;
+        do {
+            rows = await resultSet.getRows(numRows); // get numRows rows at a time
+            if (rows.length > 0) {
+                console.log("getRows(): Got " + rows.length + " rows");
+                console.log(rows);
+            }
+        } while (rows.length === numRows);
+
+        // always close the ResultSet
+        await resultSet.close();
+
 		res.json({ success: true });
+
 		
 	} catch (err) {
 		console.log('An error occurred');
