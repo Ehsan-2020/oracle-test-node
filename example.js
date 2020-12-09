@@ -12,18 +12,15 @@ const numRows = 10;  // number of rows to return from each call to getRows()
 // oracledb.initOracleClient({ libDir: 'C:\\instantclient_19_8' });                            // Windows
 // oracledb.initOracleClient({ libDir: '/Users/your_username/Downloads/instantclient_19_8' }); // macOS
 async function run(req, res) {
-	let connection;
-	try {
-		let sql, binds, options;
-		console.log(`Opening Connection to the oracle db with below config`);
-		console.dir(dbConfig);
-		connection = await oracledb.getConnection(dbConfig);
-		console.log('Obtained connection ! ');
-		    let fromDate = new Date();
+    let connection;
+    try {
+        console.log(`Opening Connection to the oracle db with below config`);
+        console.dir(dbConfig);
+        connection = await oracledb.getConnection(dbConfig);
+        console.log('Obtained connection ! ');
+        let fromDate = new Date();
         fromDate.setDate(fromDate.getDate() - 100);
-		const result = connection.execute(
-            `
-            BEGIN
+        const result = connection.execute(`BEGIN
                PMCLDB.fetchcustomeraccountstatement(:inloginid, :infromdate, :intodate, :outcursor, :outresponsecode);
              END;`,
             {
@@ -55,23 +52,23 @@ async function run(req, res) {
         // always close the ResultSet
         await resultSet.close();
 
-		res.json({ success: true });
+        res.json({ success: true });
 
-		
-	} catch (err) {
-		console.log('An error occurred');
-		console.error('ERROR 1', err);
-		res.status(400).send(err);
-	} finally {
-		if (connection) {
-			console.log('Finally closing connection !');
-			try {
-				await connection.close();
-			} catch (err) {
-				console.error('EEROR 2', err);
-				res.status(400).send(err);
-			}
-		}
-	}
+
+    } catch (err) {
+        console.log('An error occurred');
+        console.error('ERROR 1', err);
+        res.status(400).send(err);
+    } finally {
+        if (connection) {
+            console.log('Finally closing connection !');
+            try {
+                await connection.close();
+            } catch (err) {
+                console.error('EEROR 2', err);
+                res.status(400).send(err);
+            }
+        }
+    }
 }
 module.exports.run = run;
