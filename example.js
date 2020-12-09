@@ -1,6 +1,8 @@
 process.env.ORA_SDTZ = 'UTC';
 const oracledb = require('oracledb');
 const dbConfig = require('./dbconfig.js');
+const numRows = 10;  // number of rows to return from each call to getRows()
+
 // On Windows and macOS, you can specify the directory containing the Oracle
 // Client Libraries at runtime, or before Node.js starts.  On other platforms
 // the system library search path must always be set before Node.js is started.
@@ -12,7 +14,7 @@ const dbConfig = require('./dbconfig.js');
 async function run(req, res) {
 	let connection;
 	try {
-		let sql, binds, options, result;
+		let sql, binds, options;
 		console.log(`Opening Connection to the oracle db with below config`);
 		console.dir(dbConfig);
 		connection = await oracledb.getConnection(dbConfig);
