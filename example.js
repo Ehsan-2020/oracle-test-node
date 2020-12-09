@@ -28,7 +28,7 @@ async function run(req, res) {
                 infromdate: fromDate,
                 intodate: new Date(),
                 outcursor: { dir: oracledb.BIND_OUT, type: oracledb.CURSOR },
-                outresponsecode: { dir: oracledb.BIND_OUT, type: oracledb.STRING, maxSize: 40 }
+                outresponsecode: { dir: oracledb.BIND_OUT, type: oracledb.STRING, maxSize: 80 }
             });
         // const stmt = await connection.execute(`select * from CUSTOMERACCOUNTSTATEMENT`);
 
