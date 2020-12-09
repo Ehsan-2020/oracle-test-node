@@ -19,6 +19,8 @@ async function run(req, res) {
 		console.dir(dbConfig);
 		connection = await oracledb.getConnection(dbConfig);
 		console.log('Obtained connection ! ');
+		    let fromDate = new Date();
+        fromDate.setDate(fromDate.getDate() - 100);
 		const result = connection.execute(
             `
             BEGIN
