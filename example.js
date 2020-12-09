@@ -17,7 +17,7 @@ async function run(req, res) {
 		console.dir(dbConfig);
 		connection = await oracledb.getConnection(dbConfig);
 		console.log('Obtained connection ! ');
-		const stmt = await connection.execute(`select * from CUSTOMERACCOUNTSTATEMENT`);
+		const stmt = await connection.execute(`select count (*) from sys.all_objects`);
 		   console.log("resultArrayFormat", stmt)
 		console.log(connection);
 		res.json({ success: true });
