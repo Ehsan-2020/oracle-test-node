@@ -41,10 +41,23 @@ async function run(req, res) {
 
         const resultSet = result.outBinds.outcursor;
         let rows = await resultSet.getRows(1000); // get numRows rows at a time
-            if (rows.length > 0) {
-                console.log("getRows(): Got " + rows.length + " rows");
-                console.log(rows);
-            }
+        if (rows.length > 0) {
+            console.log("getRows(): Got " + rows.length + " rows");
+            console.log(rows);
+            rows.map(row => {
+                return {
+                    'Transaction DateTime': row[0],
+                    'Transaction ID': row[1],
+                    'Transaction Type': row[2],
+                    'Description': row[3],
+                    'Channel': row[3].split(',')[0].split(':')[1].trim(),
+                    'Debit': '500',
+                    'Credit': null,
+                    'Remaining Balance': '1495'
+
+                }
+            })
+        }
 
         // always close the ResultSet
         await resultSet.close();
