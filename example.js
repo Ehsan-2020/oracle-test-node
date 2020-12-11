@@ -43,7 +43,7 @@ async function run(req, res) {
         let rows = await resultSet.getRows(1000); // get numRows rows at a time
         if (rows.length > 0) {
             console.log("getRows(): Got " + rows.length + " rows");
-            console.log(rows);
+            console.log(
             rows.map(row => {
                 return {
                     'Transaction DateTime': row[0],
@@ -56,7 +56,7 @@ async function run(req, res) {
                     'Remaining Balance': '1495'
 
                 }
-            })
+            }));
         }
 
         // always close the ResultSet
