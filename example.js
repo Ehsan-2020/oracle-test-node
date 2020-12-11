@@ -40,7 +40,7 @@ async function run(req, res) {
 
 
         const resultSet = result.outBinds.outcursor;
-        let rows = await resultSet.getRows(); // get numRows rows at a time
+        let rows = await resultSet.getRows(1000); // get numRows rows at a time
             if (rows.length > 0) {
                 console.log("getRows(): Got " + rows.length + " rows");
                 console.log(rows);
