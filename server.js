@@ -7,7 +7,7 @@ var app = express();
 
 var PORT = 3000;
 
-app.get('/', function (req, res) {
+app.get('/getaccountstatement', function (req, res) {
 	example.run(req, res);
 });
 
